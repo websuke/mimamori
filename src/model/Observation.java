@@ -1,6 +1,7 @@
 package model;
 
-import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class Observation {
     /** 家庭 */
@@ -16,18 +17,18 @@ public class Observation {
      */
     public boolean exceedingTheStipulatedStayTime(){
         EntryExitRecord latestEntryExitRecord = home.getLatestEntryExitRecord();
-        double regulationOfStayTime = home.getRegulationOfStayMinute();
-        // Durationを使って差分を計算
 
-        Duration duration = Duration.between(
+        // 最新の退出時間があればスルー
+        if (latestEntryExitRecord.getExitDateTime() != null) {
+            return false;
+        }
+
+        long elapsedTime = ChronoUnit.MINUTES.between(
                 latestEntryExitRecord.getEntryDateTime(),
-                latestEntryExitRecord.getExitDateTime()
+                LocalDateTime.now()
         );
-        // 差分を日、時間、分で取得
-        long days = duration.toDays();
-        long hours = duration.toHours() % 24;
-        long minutes = duration.toMinutes() % 60;
-        return true;
+
+        return home.getRegulationOfStayMinute() <= elapsedTime;
     }
 
     /**

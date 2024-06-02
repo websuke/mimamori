@@ -25,7 +25,8 @@ public class Equipment {
                 ));
                 add(new EntryExitRecord(
                         LocalDateTime.of(2024, 1, 10, 13, 10),
-                        LocalDateTime.of(2024, 1, 10, 13, 11)
+                        null
+//                        LocalDateTime.of(2024, 1, 10, 13, 11)
                 ));
             }
         };
