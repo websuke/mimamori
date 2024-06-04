@@ -14,7 +14,7 @@ public class Main {
                 var observation = new Observation(home);
                 if (observation.exceedingTheStipulatedStayTime()) {
                     // 滞在規定時間超過
-                    System.out.println("以上です");
+                    System.out.println("異常です");
                 }
                 if (observation.usageIntervalRegulationTime()) {
                     // 利用間隔規定時間超過
