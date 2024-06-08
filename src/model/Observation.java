@@ -13,9 +13,14 @@ public class Observation {
     }
 
     public boolean watch() {
-        home.modifiedLastMonitoringTime();
 
-        return exceedingTheStipulatedStayTime();
+        if (home.isMonitoredTarget()) {
+            home.modifiedLastMonitoringTime();
+
+            return exceedingTheStipulatedStayTime();
+        }
+
+        return false;
 
 //        usageIntervalRegulationTime();
     }

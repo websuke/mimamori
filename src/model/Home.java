@@ -45,10 +45,18 @@ public class Home {
         return usageIntervalRegulationMinute;
     }
 
+    public boolean isMonitoredTarget() {
+        return LocalDateTime.now().isAfter(this.lastMonitoringTime.plusMinutes(this.monitoringInterval));
+    }
+
     public LocalDateTime modifiedLastMonitoringTime() {
         this.lastMonitoringTime = LocalDateTime.now();
 
         return this.lastMonitoringTime;
+    }
+
+    public String getId() {
+        return id;
     }
 
     /**

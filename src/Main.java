@@ -2,24 +2,26 @@ import model.Equipment;
 import model.Home;
 import model.Observation;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
 
+        var test = getHomes();
         while (true) {
             // 佐藤さん、鈴木さん
-            getHomes().forEach(home -> {
+            test.forEach(home -> {
                 var observation = new Observation(home);
                 if (observation.watch()) {
                     // 滞在規定時間超過
                     // 利用間隔規定時間超過
-                    System.out.println("異常です");
+                    System.out.println("異常です" + home.getId());
                 }
             });
 
-            Thread.sleep(3000L);
+            Thread.sleep(1000L); // TODO 実際には1分〜10分くらいでも良いのでは？
         }
 
         // それぞれの監視インスタンスの監視メソッド？
@@ -33,8 +35,8 @@ public class Main {
                 List.of(new Equipment("1")),
                 60L,
                 720L,
-                        5000,
-                        null
+                        1,
+                LocalDateTime.of(1970, 1, 1, 0, 0)
                 )
         );
 
@@ -42,8 +44,8 @@ public class Main {
                 List.of(new Equipment("2")),
                 90L,
                 1440L,
-                20000,
-                null
+                2,
+                LocalDateTime.of(1970, 1, 1, 0, 0)
                 )
         );
 
