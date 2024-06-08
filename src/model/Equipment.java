@@ -6,12 +6,12 @@ import java.util.List;
 
 public class Equipment {
     /** 器材ID */
-    private double id;
+    private String id;
 
     /** 入退室記録 */
     private List<EntryExitRecord> entryExitRecords;
 
-    public Equipment(double id) {
+    public Equipment(String id) {
         this.id = id;
         this.entryExitRecords = new ArrayList<>(){
             {
@@ -25,8 +25,8 @@ public class Equipment {
                 ));
                 add(new EntryExitRecord(
                         LocalDateTime.of(2024, 1, 10, 13, 10),
-                        null
-//                        LocalDateTime.of(2024, 1, 10, 13, 11)
+//                        null
+                        LocalDateTime.of(2024, 1, 10, 13, 11)
                 ));
             }
         };

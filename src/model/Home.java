@@ -1,26 +1,27 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Home {
     /** ホームID */
-    private double id;
+    private String id;
     /** 器材 */
-    private final List<Equipment> equipment;
+    private final List<Equipment> equipments;
     /** 滞在規定時間(分) */
     private final long regulationOfStayMinute;
     /** 利用間隔規定時間(分) */
     private final long usageIntervalRegulationMinute;
 
-    public Home(double homeId, List<Equipment> equipment, long regulationOfStayTime, long usageIntervalRegulationTime) {
+    public Home(String homeId, List<Equipment> equipments, long regulationOfStayTime, long usageIntervalRegulationTime) {
         this.id = homeId;
-        this.equipment = equipment;
+        this.equipments = equipments;
         this.regulationOfStayMinute = regulationOfStayTime;
         this.usageIntervalRegulationMinute = usageIntervalRegulationTime;
     }
 
     public List<Equipment> getEquipment() {
-        return equipment;
+        return equipments;
     }
 
     public double getRegulationOfStayMinute() {
@@ -32,10 +33,24 @@ public class Home {
     }
 
     /**
-     * 最新の入退室記録取得
+     * 未退室の入退室記録を取得
      * @return
      */
-    public EntryExitRecord getLatestEntryExitRecord() {
-        return getEquipment().getLatestEntryExitRecord();
+    public List<EntryExitRecord> getEntryTimeForThoseWhoHaveNotLeftTheRoom() {
+        List<EntryExitRecord> result = new ArrayList<>();
+
+        for (Equipment equipment : equipments) {
+            EntryExitRecord latestEntryExitRecord = equipment.getLatestEntryExitRecord();
+            if (latestEntryExitRecord == null) {
+                break;
+            }
+
+            if (latestEntryExitRecord.getExitDateTime() == null) {
+                result.add(latestEntryExitRecord);
+            }
+        }
+
+        return result;
+
     }
 }

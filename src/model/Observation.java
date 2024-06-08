@@ -2,6 +2,7 @@ package model;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 public class Observation {
     /** 家庭 */
@@ -16,19 +17,20 @@ public class Observation {
      * @return
      */
     public boolean exceedingTheStipulatedStayTime(){
-        EntryExitRecord latestEntryExitRecord = home.getLatestEntryExitRecord();
+        List<EntryExitRecord> latestEntryExitRecords = home.getEntryTimeForThoseWhoHaveNotLeftTheRoom();
 
-        // 最新の退出時間があればスルー
-        if (latestEntryExitRecord.getExitDateTime() != null) {
-            return false;
+        for (EntryExitRecord latestEntryExitRecord : latestEntryExitRecords) {
+            long elapsedTime = ChronoUnit.MINUTES.between(
+                    latestEntryExitRecord.getEntryDateTime(),
+                    LocalDateTime.now()
+            );
+
+            if (home.getRegulationOfStayMinute() <= elapsedTime) {
+                return true;
+            }
         }
 
-        long elapsedTime = ChronoUnit.MINUTES.between(
-                latestEntryExitRecord.getEntryDateTime(),
-                LocalDateTime.now()
-        );
-
-        return home.getRegulationOfStayMinute() <= elapsedTime;
+        return false;
     }
 
     /**

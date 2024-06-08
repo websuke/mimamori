@@ -31,8 +31,9 @@ public class Main {
 
     public static List<Home> getHomes() {
         List<Home> homes = new ArrayList<>();
-        homes.add(new Home(1L, new Equipment(1L), 60L, 720L));
-        homes.add(new Home(2L, new Equipment(2L), 90L, 1440L));
+        homes.add(new Home("1", List.of(new Equipment("1")), 60L, 720L));
+        homes.add(new Home("2", List.of(new Equipment("2")), 90L, 1440L));
+
 
         return homes;
     }
