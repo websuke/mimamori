@@ -12,11 +12,19 @@ public class Observation {
         this.home = home;
     }
 
+    public boolean watch() {
+        home.modifiedLastMonitoringTime();
+
+        return exceedingTheStipulatedStayTime();
+
+//        usageIntervalRegulationTime();
+    }
+
     /**
      * 滞在規定時間超過
      * @return
      */
-    public boolean exceedingTheStipulatedStayTime(){
+    private boolean exceedingTheStipulatedStayTime(){
         List<EntryExitRecord> latestEntryExitRecords = home.getEntryTimeForThoseWhoHaveNotLeftTheRoom();
 
         for (EntryExitRecord latestEntryExitRecord : latestEntryExitRecords) {
@@ -37,7 +45,7 @@ public class Observation {
      * 利用間隔規定時間超過
      * @return
      */
-    public boolean usageIntervalRegulationTime() {
+    private boolean usageIntervalRegulationTime() {
         return true;
     }
 }

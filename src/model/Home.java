@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +13,24 @@ public class Home {
     private final long regulationOfStayMinute;
     /** 利用間隔規定時間(分) */
     private final long usageIntervalRegulationMinute;
+    /** 監視間隔(分) */
+    private final long monitoringInterval;
+    /** 最終監視時間(分) */
+    private LocalDateTime lastMonitoringTime;
 
-    public Home(String homeId, List<Equipment> equipments, long regulationOfStayTime, long usageIntervalRegulationTime) {
+    public Home(String homeId,
+                List<Equipment> equipments,
+                long regulationOfStayTime,
+                long usageIntervalRegulationTime,
+                long monitoringInterval,
+                LocalDateTime lastMonitoringTime
+    ) {
         this.id = homeId;
         this.equipments = equipments;
         this.regulationOfStayMinute = regulationOfStayTime;
         this.usageIntervalRegulationMinute = usageIntervalRegulationTime;
+        this.monitoringInterval = monitoringInterval;
+        this.lastMonitoringTime = lastMonitoringTime;
     }
 
     public List<Equipment> getEquipment() {
@@ -30,6 +43,12 @@ public class Home {
 
     public double getUsageIntervalRegulationMinute() {
         return usageIntervalRegulationMinute;
+    }
+
+    public LocalDateTime modifiedLastMonitoringTime() {
+        this.lastMonitoringTime = LocalDateTime.now();
+
+        return this.lastMonitoringTime;
     }
 
     /**
